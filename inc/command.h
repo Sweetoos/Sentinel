@@ -14,19 +14,22 @@ public:
     virtual std::string help() const = 0;
 };
 
-class ChangeDirectory:public Command
+class ParseCommand : public Command
+{
+public:
+    void parseCommand(const std::string& commandName);
+};
+
+class ChangeDirectory : public Command
 {
 };
 
-class CreateDirectory:public Command
+class CreateDirectory : public Command
 {
 };
 
-class CreateFile:public Command
+class CreateFile : public Command
 {
 };
-
-
-
 
 #endif  // !COMMAND_H
