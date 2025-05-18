@@ -1,11 +1,10 @@
-#ifndef FILEMANAGER_H
+#ifndef FILEMANAGER_H 
 #define FILEMANAGER_H
 
 #include <cstdint>
 #include <ctime>
 #include <string>
-#include <map>
-#include <functional>
+#include <filesystem>
 
 struct FileInfo
 {
@@ -15,13 +14,15 @@ struct FileInfo
     uintmax_t file_size;
 };
 
+namespace fs=std::filesystem;
 class Terminal
 {
 private:
-    std::string file_path;
+    fs::path file_path;
 
 public:
-    std::map<std::string, std::function<int>> command();
+    Terminal(const std::string &systemDirectory);
+    void run();
 };
 
 #endif
