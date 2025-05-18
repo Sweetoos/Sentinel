@@ -1,2 +1,3 @@
 chatlogs.md
-.cache/*
+.cache
+build
