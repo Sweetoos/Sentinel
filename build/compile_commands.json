@@ -1,0 +1,26 @@
+[
+{
+  "directory": "/Users/kacper/projects/Sentinel/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DBOOST_SYSTEM_DYN_LINK -DBOOST_SYSTEM_NO_LIB -I/Users/kacper/projects/Sentinel/inc -isystem /opt/homebrew/include -isystem /Users/kacper/projects/Sentinel/build/_deps/googletest-src/googletest/include -isystem /Users/kacper/projects/Sentinel/build/_deps/googletest-src/googletest  -Wall -Wextra -O2 -std=gnu++2b -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -o CMakeFiles/sentinel.dir/src/sentinel.cpp.o -c /Users/kacper/projects/Sentinel/src/sentinel.cpp",
+  "file": "/Users/kacper/projects/Sentinel/src/sentinel.cpp",
+  "output": "CMakeFiles/sentinel.dir/src/sentinel.cpp.o"
+},
+{
+  "directory": "/Users/kacper/projects/Sentinel/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DBOOST_SYSTEM_DYN_LINK -DBOOST_SYSTEM_NO_LIB -I/Users/kacper/projects/Sentinel/inc -isystem /opt/homebrew/include -isystem /Users/kacper/projects/Sentinel/build/_deps/googletest-src/googletest/include -isystem /Users/kacper/projects/Sentinel/build/_deps/googletest-src/googletest  -Wall -Wextra -O2 -std=gnu++2b -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -o CMakeFiles/sentinel.dir/src/filemanager.cpp.o -c /Users/kacper/projects/Sentinel/src/filemanager.cpp",
+  "file": "/Users/kacper/projects/Sentinel/src/filemanager.cpp",
+  "output": "CMakeFiles/sentinel.dir/src/filemanager.cpp.o"
+},
+{
+  "directory": "/Users/kacper/projects/Sentinel/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DBOOST_SYSTEM_DYN_LINK -DBOOST_SYSTEM_NO_LIB -I/Users/kacper/projects/Sentinel/inc -isystem /opt/homebrew/include -isystem /Users/kacper/projects/Sentinel/build/_deps/googletest-src/googletest/include -isystem /Users/kacper/projects/Sentinel/build/_deps/googletest-src/googletest  -Wall -Wextra -O2 -std=gnu++2b -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -o CMakeFiles/sentinel.dir/src/algorithms/sha256.cpp.o -c /Users/kacper/projects/Sentinel/src/algorithms/sha256.cpp",
+  "file": "/Users/kacper/projects/Sentinel/src/algorithms/sha256.cpp",
+  "output": "CMakeFiles/sentinel.dir/src/algorithms/sha256.cpp.o"
+},
+{
+  "directory": "/Users/kacper/projects/Sentinel/build",
+  "command": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ -DBOOST_SYSTEM_DYN_LINK -DBOOST_SYSTEM_NO_LIB -I/Users/kacper/projects/Sentinel/inc -isystem /opt/homebrew/include -isystem /Users/kacper/projects/Sentinel/build/_deps/googletest-src/googletest/include -isystem /Users/kacper/projects/Sentinel/build/_deps/googletest-src/googletest  -Wall -Wextra -O2 -std=gnu++2b -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -o CMakeFiles/sentinel.dir/src/tests/test.cpp.o -c /Users/kacper/projects/Sentinel/src/tests/test.cpp",
+  "file": "/Users/kacper/projects/Sentinel/src/tests/test.cpp",
+  "output": "CMakeFiles/sentinel.dir/src/tests/test.cpp.o"
+}
+]
