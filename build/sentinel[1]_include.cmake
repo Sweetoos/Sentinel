@@ -1,5 +1,0 @@
-if(EXISTS "/Users/kacper/projects/Sentinel/build/sentinel[1]_tests.cmake")
-  include("/Users/kacper/projects/Sentinel/build/sentinel[1]_tests.cmake")
-else()
-  add_test(sentinel_NOT_BUILT sentinel_NOT_BUILT)
-endif()
