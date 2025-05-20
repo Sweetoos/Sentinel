@@ -2,6 +2,7 @@
 #define COMMAND_H
 
 #include <string>
+#include <vector>
 
 class Command
 {
@@ -12,12 +13,6 @@ public:
     virtual void execute() = 0;
     virtual ~Command() = default;
     virtual std::string help() const = 0;
-};
-
-class ParseCommand : public Command
-{
-public:
-    void parseCommand(const std::string& commandName);
 };
 
 class ChangeDirectory : public Command
@@ -32,4 +27,8 @@ class CreateFile : public Command
 {
 };
 
+namespace CommandParser
+{
+std::vector<std::string> tokenize(const std::string &input);
+}
 #endif  // !COMMAND_H

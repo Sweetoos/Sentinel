@@ -5,7 +5,7 @@
 
 int main()
 {
-    std::cout << "OpenSSL version: " << OpenSSL_version(OPENSSL_VERSION);
+    std::cout << "OpenSSL version: " << OpenSSL_version(OPENSSL_VERSION)<<'\n';
     EVP_MD_CTX *ctx = nullptr;
     Terminal terminal("sentinel");
     terminal.run();

@@ -2,8 +2,20 @@
 
 #include <sstream>
 
-void ParseCommand::parseCommand(const std::string &commandName)
+namespace CommandParser
 {
-    std::stringstream ss; 
-
+std::vector<std::string> tokenize(const std::string &input)
+{
+    std::vector<std::string> tokens;
+    std::istringstream ss(input);
+    char delimiter = ' ';
+    std::string token;
+    while (std::getline(ss, token, delimiter))
+    {
+        tokens.push_back(token);
+    }
+    return tokens;
 }
+}  // namespace CommandParser
+
+
