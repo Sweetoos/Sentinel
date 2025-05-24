@@ -1,44 +1,51 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.29)
 project(sentinel)
 set(CMAKE_CXX_STANDARD 23)
-
-include(FetchContent)
-FetchContent_Declare(
-    googletest
-    GIT_REPOSITORY "https://github.com/google/googletest.git"
-    GIT_TAG        "v1.14.0"
-)
-FetchContent_MakeAvailable(googletest)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY "https://github.com/google/googletest.git"
+  GIT_TAG "v1.14.0")
+set(GTEST_INSTALL
+    OFF
+    CACHE BOOL "Disable gtest install target")
+set(BUILD_GMOCK
+    OFF
+    CACHE BOOL "Disable building gmock if not needed")
+FetchContent_MakeAvailable(googletest)
+
+FetchContent_Declare(
+  nlohmann_json
+  GIT_REPOSITORY "https://github.com/nlohmann/json.git"
+  GIT_TAG "v3.11.3")
+FetchContent_MakeAvailable(nlohmann_json)
+
 find_package(OpenSSL REQUIRED)
-find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost 1.70.0 REQUIRED COMPONENTS system)
 
-if(OPENSSL_FOUND)
-  include_directories(${OPENSSL_INCLUDE_DIR})
-  include_directories(${Boost_INCLUDE_DIRS})
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -O2")
-  add_executable(sentinel 
-        src/sentinel.cpp 
+add_executable(sentinel
+  src/sentinel.cpp 
+  src/filemanager/filemanager.cpp 
+  src/filemanager/command.cpp
+  src/algorithms/sha256.cpp 
+  src/tests/test.cpp)
+target_compile_options(sentinel PRIVATE -Wall -Wextra -O2)
 
-        src/filemanager/filemanager.cpp
-        src/filemanager/command.cpp
+target_include_directories(sentinel PRIVATE "${PROJECT_SOURCE_DIR}/inc")
 
-        src/algorithms/sha256.cpp
+target_link_libraries(sentinel PRIVATE 
+    Boost::system
+    OpenSSL::SSL
+    OpenSSL::Crypto
+    nlohmann_json::nlohmann_json
+    gtest_main
+)
 
-        src/tests/test.cpp
-    )
-  target_link_libraries(sentinel 
-        ${Boost_LIBRARIES} 
-        ${OPENSSL_LIBRARIES}
-        gtest_main     
-        gtest
-    )
-else()
-  message(FATAL_ERROR "OpenSSL not found.")
+if(BUILD_TESTING AND TARGET gtest)
+    include(GoogleTest)
+    gtest_discover_tests(sentinel)
 endif()
-
-include_directories(inc)
-include(GoogleTest)
-gtest_discover_tests(sentinel)

@@ -1,0 +1,282 @@
+// json is written by chat, i will change something in the future (probably)
+{
+  "commands": [
+    {
+      "command_name": "ls",
+      "aliases": ["dir"],
+      "description": "List directory contents.",
+      "help_long": "Usage: ls [OPTIONS]... [DIRECTORY]...\nList information about the FILEs (the current directory by default).\nSort entries alphabetically if none of -cftuvSUX nor --sort is specified.",
+      "flags": [
+        {
+          "short": "-l",
+          "long": "--long",
+          "description": "Use a long listing format."
+        },
+        {
+          "short": "-a",
+          "long": "--all",
+          "description": "Do not ignore entries starting with ."
+        },
+        {
+          "short": "-h",
+          "long": "--human-readable",
+          "description": "With -l, print sizes in human readable format (e.g., 1K 234M 2G)."
+        },
+        {
+          "short": "-R",
+          "long": "--recursive",
+          "description": "List subdirectories recursively."
+        }
+      ],
+      "args": [
+        {
+          "name": "DIRECTORY",
+          "description": "Directory/file to list. Defaults to current directory if none specified.",
+          "required": false,
+          "variadic": true
+        }
+      ],
+      "handler": "handle_ls"
+    },
+    {
+      "command_name": "mkdir",
+      "description": "Create DIRECTORY(ies), if they do not already exist.",
+      "help_long": "Usage: mkdir [OPTION]... DIRECTORY...",
+      "flags": [
+        {
+          "short": "-p",
+          "long": "--parents",
+          "description": "No error if existing, make parent directories as needed."
+        }
+      ],
+      "args": [
+        {
+          "name": "DIRECTORY",
+          "description": "Name of the directory to create.",
+          "required": true,
+          "variadic": true
+        }
+      ],
+      "handler": "handle_mkdir"
+    },
+    {
+      "command_name": "cd",
+      "description": "Change the current working directory.",
+      "help_long": "Usage: cd [DIRECTORY]",
+      "args": [
+        {
+          "name": "DIRECTORY",
+          "description": "The directory to change to. Defaults to home if not specified (or use '~'). Use '-' for previous directory.",
+          "required": false // Technically 'cd' without args goes to home.
+        }
+      ],
+      "handler": "handle_cd"
+    },
+    {
+      "command_name": "pwd",
+      "description": "Print name of current/working directory.",
+      "help_long": "Usage: pwd",
+      "handler": "handle_pwd"
+    },
+    {
+      "command_name": "rm",
+      "description": "Remove files or directories.",
+      "help_long": "Usage: rm [OPTION]... FILE...",
+      "flags": [
+        {
+          "short": "-r",
+          "long": "--recursive",
+          "description": "Remove directories and their contents recursively."
+        },
+        {
+          "short": "-f",
+          "long": "--force",
+          "description": "Ignore nonexistent files and arguments, never prompt."
+        },
+        {
+          "short": "-i",
+          "long": "--interactive",
+          "description": "Prompt before every removal."
+        }
+      ],
+      "args": [
+        {
+          "name": "FILE",
+          "description": "File or directory to remove.",
+          "required": true,
+          "variadic": true
+        }
+      ],
+      "handler": "handle_rm"
+    },
+    {
+      "command_name": "cp",
+      "description": "Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.",
+      "help_long": "Usage: cp [OPTION]... SOURCE DEST\n  or:  cp [OPTION]... SOURCE... DIRECTORY",
+      "flags": [
+        {
+          "short": "-r",
+          "long": "--recursive",
+          "description": "Copy directories recursively."
+        },
+        {
+          "short": "-i",
+          "long": "--interactive",
+          "description": "Prompt before overwrite."
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "description": "Explain what is being done."
+        }
+      ],
+      "args": [
+        {
+          "name": "SOURCE",
+          "description": "Source file(s) or directory.",
+          "required": true,
+          "variadic": true // To allow `cp src1 src2 ... dest_dir`
+        },
+        {
+          "name": "DESTINATION",
+          "description": "Destination file or directory.",
+          "required": true,
+          "variadic": false // The last argument is always the destination.
+        }
+      ],
+      "handler": "handle_cp"
+    },
+    {
+      "command_name": "mv",
+      "description": "Move (rename) SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.",
+      "help_long": "Usage: mv [OPTION]... SOURCE DEST\n  or:  mv [OPTION]... SOURCE... DIRECTORY",
+      "flags": [
+        {
+          "short": "-i",
+          "long": "--interactive",
+          "description": "Prompt before overwrite."
+        },
+        {
+          "short": "-v",
+          "long": "--verbose",
+          "description": "Explain what is being done."
+        }
+      ],
+      "args": [
+        {
+          "name": "SOURCE",
+          "description": "Source file(s) or directory.",
+          "required": true,
+          "variadic": true
+        },
+        {
+          "name": "DESTINATION",
+          "description": "Destination file or directory.",
+          "required": true,
+          "variadic": false
+        }
+      ],
+      "handler": "handle_mv"
+    },
+    {
+      "command_name": "cat",
+      "description": "Concatenate FILE(s) to standard output.",
+      "help_long": "Usage: cat [OPTION]... [FILE]...",
+      "flags": [
+        {
+          "short": "-n",
+          "long": "--number",
+          "description": "Number all output lines."
+        },
+        {
+          "short": "-E",
+          "long": "--show-ends",
+          "description": "Display $ at end of each line."
+        }
+      ],
+      "args": [
+        {
+          "name": "FILE",
+          "description": "File(s) to display. Reads from standard input if no FILE is given or when FILE is -.",
+          "required": false,
+          "variadic": true
+        }
+      ],
+      "handler": "handle_cat"
+    },
+    {
+      "command_name": "touch",
+      "description": "Change file timestamps or create an empty file.",
+      "help_long": "Usage: touch [OPTION]... FILE...",
+      "flags": [
+        {
+          "short": "-a",
+          "long": null,
+          "description": "Change only the access time."
+        },
+        {
+          "short": "-m",
+          "long": null,
+          "description": "Change only the modification time."
+        },
+        {
+          "short": "-c",
+          "long": "--no-create",
+          "description": "Do not create any files."
+        }
+      ],
+      "options": [
+        {
+          "short": "-d",
+          "long": "--date",
+          "description": "Parse STRING and use it instead of current time.",
+          "arg_name": "STRING",
+          "required": false
+        },
+        {
+          "short": "-r",
+          "long": "--reference",
+          "description": "Use this FILE's times instead of current time.",
+          "arg_name": "FILE",
+          "required": false
+        }
+      ],
+      "args": [
+        {
+          "name": "FILE",
+          "description": "File(s) to touch.",
+          "required": true,
+          "variadic": true
+        }
+      ],
+      "handler": "handle_touch"
+    },
+    {
+      "command_name": "help",
+      "description": "Display help information for commands.",
+      "help_long": "Usage: help [COMMAND]",
+      "args": [
+        {
+          "name": "COMMAND_NAME",
+          "description": "The command to get help for. Displays general help if no command is specified.",
+          "required": false
+        }
+      ],
+      "handler": "handle_help"
+    },
+    {
+      "command_name": "exit",
+      "aliases": ["quit"],
+      "description": "Exit the shell.",
+      "help_long": "Usage: exit [STATUS]",
+      "args": [
+        {
+          "name": "STATUS",
+          "description": "Exit status (integer).",
+          "required": false
+        }
+      ],
+      "handler": "handle_exit"
+    }
+  ]
+}

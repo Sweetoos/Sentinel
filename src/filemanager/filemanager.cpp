@@ -20,7 +20,11 @@ Terminal::Terminal(const std::string &systemDirectory)
 void Terminal::run()
 {
     std::string cmd;
-    std::cout << file_path.c_str() << "> ";
-    std::getline(std::cin, cmd);
-    CommandParser::tokenize(cmd);
+    bool runnable = true;
+    while (runnable)
+    {
+        std::cout << file_path.c_str() << "> ";
+        std::getline(std::cin, cmd);
+        CommandParser::commandTokenizer(cmd);
+    }
 }
