@@ -31,6 +31,7 @@ add_executable(sentinel
   src/sentinel.cpp 
   src/filemanager/filemanager.cpp 
   src/filemanager/command.cpp
+  src/filemanager/jsonreader.cpp
   src/algorithms/sha256.cpp 
   src/tests/test.cpp)
 target_compile_options(sentinel PRIVATE -Wall -Wextra -O2)

@@ -33,7 +33,7 @@
           "name": "DIRECTORY",
           "description": "Directory/file to list. Defaults to current directory if none specified.",
           "required": false,
-          "variadic": true
+          "variadic": true //argument can accept multiple values (like a list)
         }
       ],
       "handler": "handle_ls"

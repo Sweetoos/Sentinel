@@ -2,7 +2,9 @@
 
 #include <cctype>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
+#include <nlohmann/json.hpp>
 
 namespace CommandParser
 {
@@ -44,6 +46,43 @@ std::vector<std::string> commandTokenizer(const std::string &input)
 }
 }  // namespace CommandParser
 //
+
+/*
+CreateDirectory::CreateDirectory()
+{
+    using json = nlohmann::json;
+    const std::string jsonFileDirectory = "res/";
+    const std::string jsonFileName = "commands.json";
+    const std::string fileName = jsonFileDirectory + jsonFileName;
+    std::ifstream ifs(fileName);
+    json file;
+    if (ifs.is_open())
+    {
+        std::cerr << "[ERROR]: Couldn't open " << jsonFileName << " file \n";
+        return;
+    }
+    try
+    {
+        ifs >> file;
+        ifs.close();
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "[ERROR]: JSON parse error in " << jsonFileName << '\n';
+        if (ifs.is_open()) ifs.close();
+    }
+}
+*/
+using json = nlohmann::json;
+static Flag fromJson(const json &j)
+{
+    return Flag{
+        j.value("short", ""),
+        j.value("long", ""),
+        j.value("description", ""),
+    };
+}
+
 void CreateDirectory::execute(const ParsedCommand &command) {}
 
 std::string CreateDirectory::help() const
@@ -54,9 +93,9 @@ std::string CreateDirectory::help() const
         (cp::commandTokenizer(command)[1][0] == '-' &&
          cp::commandTokenizer(command)[1][1] == '-'))
     {
-        //handle all files from 2 to the rest
+        
+        // handle all files from 2 to the rest
     }
-    
 }
 
 bool CreateDirectory::fileChecker(const std::vector<std::string> &command,
