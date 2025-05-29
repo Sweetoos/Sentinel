@@ -30,7 +30,7 @@ public:
     Terminal(const std::string &systemDirectory);
     void run();
     void runCommand(const std::string &input);
-    ParsedCommand redistrubuteTokens();
+    void redistrubuteTokens();
 };
 
 #endif

@@ -1,4 +1,5 @@
 #include "filemanager.h"
+#include <cstddef>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -35,12 +36,15 @@ void Terminal::run()
 void Terminal::runCommand(const std::string &input)
 {
     tokens = CommandParser::commandTokenizer(input);
-    parsed_command = redistrubuteTokens();
+    redistrubuteTokens();
 }
 
 // each command has: command, flags, option, argument
-ParsedCommand Terminal::redistrubuteTokens()
+// mkdir -p --mode=755 folder1 folder2
+void Terminal::redistrubuteTokens()
 {
+    if (tokens.empty()) throw "command is empty";
+
     parsed_command.command = tokens[0];
 
     for (size_t i = 1; i < tokens.size(); i++)
@@ -48,13 +52,29 @@ ParsedCommand Terminal::redistrubuteTokens()
         const std::string &token = tokens[i];
         if (token.starts_with("--"))
         {
-            if (token.contains("="))
+            if (token.contains("="))  // option with value e. g. --mode=755
             {
+                size_t pos = token.find('=');
+                std::string name = token.substr(0, pos);
+                std::string value = token.substr(pos + 1);
+                parsed_command.options[name] = value;
             }
             else
             {
                 parsed_command.flags.push_back(token);
             }
+        }
+        else if (token.starts_with("-" && token.length() > 1))
+        {
+            for (int j = 1; j < token.length(); j++)
+            {
+                char flag = token[j];
+                parsed_command.flags.push_back("-" + flag);
+            }
+        }
+        else
+        {
+            parsed_command.args.push_back(token);
         }
     }
 }
