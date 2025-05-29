@@ -3,3 +3,11 @@ chatlogs.md
 build
 sentinel
 flags.md
+_deps
+CMakeFiles
+CMakeCache.txt
+build.ninja
+cmake_install.cmake
+compile_commands.json
+bin
+notes.md

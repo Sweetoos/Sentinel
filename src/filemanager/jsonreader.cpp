@@ -1,11 +1,10 @@
-#include "jsonreader.h"
 #include "command.h"
 
 #include <fstream>
 #include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
-std::unordered_map<std::string, Command> JsonReader::command_registry;
+std::unordered_map<std::string, Command> command_registry;
 
 JsonReader::json readJsonFile(const std::string &path)
 {

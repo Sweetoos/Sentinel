@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include "command.h"
+#include <string_view>
 
 namespace fs = std::filesystem;
 
@@ -25,6 +25,36 @@ void Terminal::run()
     {
         std::cout << file_path.c_str() << "> ";
         std::getline(std::cin, cmd);
-        CommandParser::commandTokenizer(cmd);
+        if (cmd != "exit")
+            runCommand(cmd);
+        else
+            runnable = false;
+    }
+}
+
+void Terminal::runCommand(const std::string &input)
+{
+    tokens = CommandParser::commandTokenizer(input);
+    parsed_command = redistrubuteTokens();
+}
+
+// each command has: command, flags, option, argument
+ParsedCommand Terminal::redistrubuteTokens()
+{
+    parsed_command.command = tokens[0];
+
+    for (size_t i = 1; i < tokens.size(); i++)
+    {
+        const std::string &token = tokens[i];
+        if (token.starts_with("--"))
+        {
+            if (token.contains("="))
+            {
+            }
+            else
+            {
+                parsed_command.flags.push_back(token);
+            }
+        }
     }
 }

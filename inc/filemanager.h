@@ -1,10 +1,13 @@
-#ifndef FILEMANAGER_H 
+#ifndef FILEMANAGER_H
 #define FILEMANAGER_H
 
 #include <cstdint>
 #include <ctime>
-#include <string>
 #include <filesystem>
+#include <string>
+#include <vector>
+#include "command.h"
+#include "jsonreader.h"
 
 struct FileInfo
 {
@@ -14,15 +17,20 @@ struct FileInfo
     uintmax_t file_size;
 };
 
-namespace fs=std::filesystem;
+namespace fs = std::filesystem;
 class Terminal
 {
 private:
     fs::path file_path;
+    std::string command;
+    std::vector<std::string> tokens;
+    ParsedCommand parsed_command;
 
 public:
     Terminal(const std::string &systemDirectory);
     void run();
+    void runCommand(const std::string &input);
+    ParsedCommand redistrubuteTokens();
 };
 
 #endif
