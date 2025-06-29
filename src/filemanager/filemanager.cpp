@@ -3,8 +3,8 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <nlohmann/json.hpp>
 #include <string>
-#include <string_view>
 
 namespace fs = std::filesystem;
 
@@ -43,14 +43,41 @@ void Terminal::runCommand(const std::string &input)
 // mkdir -p --mode=755 folder1 folder2
 void Terminal::redistrubuteTokens()
 {
+
+    using json = nlohmann::json;
+    std::ifstream file("res/commands.json");
+    if(!file.is_open())
+        throw "file commands.json can't be found";
+    json data = json::parse(file);
+
+
     if (tokens.empty()) throw "command is empty";
 
+    /*
+     * commands: mkdir, cd etc
+     */
     parsed_command.command = tokens[0];
+    json command_def;
+    for (const auto &cmd : data["commands"])
+    {
+        if (cmd["command_name"] == parsed_command.command)
+        {
+            command_def = cmd;
+            break;
+        }
+    }
+
+    if (command_def.empty())
+    {
+        std::cout << "command not found\n";
+        return;
+    }
 
     for (size_t i = 1; i < tokens.size(); i++)
     {
         const std::string &token = tokens[i];
-        if (token.starts_with("--"))
+        if (token.starts_with("-") && data.contains("command") &&
+            command_def["command"].is_object())
         {
             if (token.contains("="))  // option with value e. g. --mode=755
             {
@@ -64,9 +91,9 @@ void Terminal::redistrubuteTokens()
                 parsed_command.flags.push_back(token);
             }
         }
-        else if (token.starts_with("-" && token.length() > 1))
+        else if (token.starts_with("-") && token.length() > 1)
         {
-            for (int j = 1; j < token.length(); j++)
+            for (size_t j = 1; j < token.length(); j++)
             {
                 char flag = token[j];
                 parsed_command.flags.push_back("-" + flag);
